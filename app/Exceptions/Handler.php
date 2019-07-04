@@ -29,8 +29,6 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
      * @param  \Exception  $exception
      * @return void
      */
@@ -42,15 +40,12 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Exception $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws Exception
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
-        if (app()->environment() === 'testing') throw $exception;
-
         return parent::render($request, $exception);
     }
 }

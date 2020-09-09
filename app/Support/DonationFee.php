@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: laurentbeauvisage
- * Date: 07/05/2018
- * Time: 14:07
- */
 
-namespace App;
+namespace App\Support;
 
 
 class DonationFee
@@ -15,7 +9,7 @@ class DonationFee
     private $donation;
     private $commissionPercentage;
 
-    public function __construct($donation, $commissionPercentage)
+    public function __construct(int $donation, int $commissionPercentage)
     {
         $this->donation = $donation;
         $this->commissionPercentage = $commissionPercentage;

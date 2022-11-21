@@ -39,12 +39,20 @@ class DonationFeeTest extends TestCase
         $expected = 250 + DonationFee::FIXED_FEES;
         $this->assertEquals($expected, $actual);
     }
-    public function test_percent_amount_is_between_higher_than_30()
+    public function test_percent_amount_is_higher_than_30()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Le montant de la commission est incorrect');
 
         $donationFees = new \App\Support\DonationFee(1000, 35);
+        $donationFees->getCommissionAmount();
+    }
+    public function test_percent_amount_is_lower_than_0()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Le montant de la commission est incorrect');
+
+        $donationFees = new \App\Support\DonationFee(1000, -5);
         $donationFees->getCommissionAmount();
     }
 
@@ -58,6 +66,20 @@ class DonationFeeTest extends TestCase
 
         // Alors la Valeur de la commission doit être de 20
         $expected = 20 + DonationFee::FIXED_FEES;
+        $this->assertEquals($expected, $actual);
+    }
+    public function test_get_summaray_return_correct_value()
+    {
+        $donationFees = new \App\Support\DonationFee(200, 10);
+        $actual = $donationFees->getSummary();
+        $expected = [
+            'donation' => 200,
+            'fixedFee' => DonationFee::FIXED_FEES,
+            'commission' => 20,
+            'fixedAndCommission' => 70,
+            'amountCollected' => 130,
+        ];
+
         $this->assertEquals($expected, $actual);
     }
 }

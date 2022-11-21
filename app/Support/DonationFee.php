@@ -6,6 +6,7 @@ use PHPUnit\Framework\Exception;
 
 class DonationFee
 {
+    const FIXED_FEES = 0.5;
 
     private $donation;
     private $commissionPercentage;
@@ -22,10 +23,16 @@ class DonationFee
         $this->commissionPercentage = $commissionPercentage;
     }
 
+    public function getFixedAndCommissionFeeAmount(){
+
+        return $this->donation * ($this->commissionPercentage/100) + DonationFee::FIXED_FEES;
+
+    }
+
     public function getCommissionAmount()
     {
         if($this->commissionPercentage >= 0 && $this->commissionPercentage <=30){
-                return $this->donation * ($this->commissionPercentage/100);
+                $this->getFixedAndCommissionFeeAmount();
             }
         else{
             $error = new Exception( "Le montant de la comission est incorrect");

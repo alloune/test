@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Support;
-use PHPUnit\Framework\Exception;
+
 
 
 class DonationFee
 {
-    const FIXED_FEES = 0.5;
+    const FIXED_FEES = 50;
 
     private $donation;
     private $commissionPercentage;
@@ -17,8 +17,7 @@ class DonationFee
             $this->donation = $donation;
         }
         else{
-            $error = new Exception('Le montant doit être un entier supérieur à 100');
-            throw $error;
+            throw new \Exception('Le montant doit être un entier supérieur à 100');
         }
         $this->commissionPercentage = $commissionPercentage;
     }
@@ -32,11 +31,11 @@ class DonationFee
     public function getCommissionAmount()
     {
         if($this->commissionPercentage >= 0 && $this->commissionPercentage <=30){
-                return $this->getFixedAndCommissionFeeAmount() < 5 ? : 5 ;
+                return min($this->getFixedAndCommissionFeeAmount(), 500);
             }
         else{
-            $error = new Exception( "Le montant de la comission est incorrect");
-            throw $error;
+            throw new \Exception( "Le montant de la commission est incorrect");
+
         }
     }
 

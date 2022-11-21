@@ -55,7 +55,6 @@ class DonationFeeTest extends TestCase
         $donationFees = new \App\Support\DonationFee(1000, -5);
         $donationFees->getCommissionAmount();
     }
-
     public function test_commission_amount_is_20_cents_form_donation_of_200_cents_and_commission_of_10_percent()
     {
         // Etant donné une donation de 200 et commission de 10%
@@ -68,7 +67,7 @@ class DonationFeeTest extends TestCase
         $expected = 20 + DonationFee::FIXED_FEES;
         $this->assertEquals($expected, $actual);
     }
-    public function test_get_summaray_return_correct_value()
+    public function test_get_summary_return_correct_value()
     {
         $donationFees = new \App\Support\DonationFee(200, 10);
         $actual = $donationFees->getSummary();

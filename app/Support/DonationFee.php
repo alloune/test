@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Support;
+use PHPUnit\Framework\Exception;
 
 
 class DonationFee
@@ -17,7 +18,13 @@ class DonationFee
 
     public function getCommissionAmount()
     {
-        return $this->donation * ($this->commissionPercentage/100);
+        if($this->commissionPercentage >= 0 && $this->commissionPercentage <=30){
+                return $this->donation * ($this->commissionPercentage/100);
+            }
+        else{
+            $error = new Exception( "Le montant de la comission est incorrect");
+            throw $error;
+        }
     }
 
     public function getAmountCollected(){

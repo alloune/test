@@ -32,7 +32,7 @@ class DonationFee
     public function getCommissionAmount()
     {
         if($this->commissionPercentage >= 0 && $this->commissionPercentage <=30){
-                $this->getFixedAndCommissionFeeAmount();
+                return $this->getFixedAndCommissionFeeAmount() < 5 ? : 5 ;
             }
         else{
             $error = new Exception( "Le montant de la comission est incorrect");

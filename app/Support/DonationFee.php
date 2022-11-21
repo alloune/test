@@ -12,7 +12,13 @@ class DonationFee
 
     public function __construct(int $donation, int $commissionPercentage)
     {
-        $this->donation = $donation;
+        if(($donation%100 == 0) && $donation/100>=1){
+            $this->donation = $donation;
+        }
+        else{
+            $error = new Exception('Le montant doit être un entier supérieur à 100');
+            throw $error;
+        }
         $this->commissionPercentage = $commissionPercentage;
     }
 

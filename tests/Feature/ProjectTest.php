@@ -8,6 +8,9 @@ use Tests\TestCase;
 
 class ProjectTest extends TestCase
 {
+
+    use RefreshDatabase;
+    protected $seed = true;
     /**
      * A basic test example.
      *
@@ -32,5 +35,16 @@ class ProjectTest extends TestCase
 
         $expected = 'toto';
        $this->assertEquals($expected, $response->name);
+    }
+    public function test_project_name_present_in_index_view()
+    {
+        //given
+        $project = Project::first();
+
+        //when
+        $response = $this->get('/project/'.$project->id );
+
+        //then
+        $response->assertSee( $project->name );
     }
 }

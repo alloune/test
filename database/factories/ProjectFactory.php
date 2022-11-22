@@ -17,7 +17,7 @@ class ProjectFactory extends Factory
             'name' => $this->faker->name,
             'description' => $this->faker->unique()->text,
             'created_at' => now(),
-            'author' => $this->faker->userName,
+            'author_name' => $this->faker->userName,
         ];
     }
 }

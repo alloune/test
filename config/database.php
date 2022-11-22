@@ -90,8 +90,8 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
-        'mysql_testing' => [
-            'driver'    => 'mysql',
+        'sqlite_testing' => [
+            'driver'    => 'sqlite',
             'database'  => ':memory:',
             'prefix'    => ''
         ]

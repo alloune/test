@@ -58,5 +58,28 @@ class ProjectTest extends TestCase
         //then
         $response->assertSee( $project->name );
     }
+    public function test_author_name_is_present_in_show_view()
+    {
+        //given
+        $project = Project::first();
+
+        //when
+        $response = $this->get('/project/'.$project->id );
+
+        //then
+        $response->assertSee( $project->author_name );
+    }
+
+    public function test_relationship_between_project_and_user(){
+        //given
+        $project = Project::first()->make(['user_id'=> 2]);
+
+        //when
+        $response = $project->user_id;
+
+        //then
+        $expected = 2;
+        $this->assertEquals($expected, $response);
+    }
 
 }

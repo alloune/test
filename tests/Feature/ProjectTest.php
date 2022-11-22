@@ -42,9 +42,21 @@ class ProjectTest extends TestCase
         $project = Project::first();
 
         //when
+        $response = $this->get('/project' );
+
+        //then
+        $response->assertSee( $project->name );
+    }
+    public function test_project_name_present_in_show_view()
+    {
+        //given
+        $project = Project::first();
+
+        //when
         $response = $this->get('/project/'.$project->id );
 
         //then
         $response->assertSee( $project->name );
     }
+
 }

@@ -67,6 +67,7 @@ class DonationFeeTest extends TestCase
         $expected = 20 + DonationFee::FIXED_FEES;
         $this->assertEquals($expected, $actual);
     }
+    // oublie amountCollected
     public function test_get_summary_return_correct_value()
     {
         $donationFees = new \App\Support\DonationFee(200, 10);

@@ -20,13 +20,13 @@ class ProjectTest extends TestCase
     {
         $response = $this->get('/project');
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
     }
 
     public function test_h1_present_with_specific_title()
     {
         $response = $this->get('/project');
-        $response->assertSee("<h1>Liste des projets</h1>", $escaped = false);
+        $response->assertSee("<h1>Liste des projets</h1>", false);
     }
 
     public function test_project_name_is_valid()
@@ -70,16 +70,6 @@ class ProjectTest extends TestCase
         $response->assertSee( $project->author_name );
     }
 
-    public function test_relationship_between_project_and_user(){
-        //given
-        $project = Project::first()->make(['user_id'=> 2]);
 
-        //when
-        $response = $project->user_id;
-
-        //then
-        $expected = 2;
-        $this->assertEquals($expected, $response);
-    }
 
 }

@@ -14,7 +14,7 @@ class DonationFee
     public function __construct(int $donation, int $commissionPercentage)
     {
         if(($donation%100 == 0) && $donation/100>=1){
-            $this->donation = $donation;
+            $this->donation = intval($donation);
         }
         else{
             throw new \Exception('Le montant doit être un entier supérieur à 100');
@@ -24,14 +24,14 @@ class DonationFee
 
     public function getFixedAndCommissionFeeAmount(){
 
-        return $this->donation * ($this->commissionPercentage/100) + DonationFee::FIXED_FEES;
+        return intval(min($this->getCommissionAmount() + DonationFee::FIXED_FEES,500));
 
     }
 
     public function getCommissionAmount()
     {
         if($this->commissionPercentage >= 0 && $this->commissionPercentage <=30){
-                return min($this->getFixedAndCommissionFeeAmount(), 500);
+                return intval($this->donation * ($this->commissionPercentage/100));
             }
         else{
             throw new \Exception( "Le montant de la commission est incorrect");
@@ -41,7 +41,7 @@ class DonationFee
 
     public function getAmountCollected(){
 
-        return $this->donation - $this->getCommissionAmount();
+        return intval($this->donation - $this->getCommissionAmount());
 
     }
 
@@ -49,8 +49,8 @@ class DonationFee
         return [
           'donation' => $this->donation,
           'fixedFee' => DonationFee::FIXED_FEES,
-          'commission' => $this->getCommissionAmount() - DonationFee::FIXED_FEES,
-          'fixedAndCommission' => $this->getCommissionAmount(),
+          'commission' => $this->getCommissionAmount(),
+          'fixedAndCommission' => $this->getFixedAndCommissionFeeAmount(),
           'amountCollected' => $this->getAmountCollected(),
         ];
     }

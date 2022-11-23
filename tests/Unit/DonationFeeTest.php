@@ -17,9 +17,33 @@ class DonationFeeTest extends TestCase
         $actual = $donationFees->getCommissionAmount();
 
         // Alors la Valeur de la commission doit être de 10
-        $expected = 10 + DonationFee::FIXED_FEES;
+        $expected = 10;
         $this->assertEquals($expected, $actual);
     }
+
+    public function test_fixed_and_commission_fee_amount(){
+        //given
+        $donnationFees = new DonationFee(100, 10);
+        //when
+        $response = $donnationFees->getFixedAndCommissionFeeAmount();
+
+        //then
+        $expected = 10 + DonationFee::FIXED_FEES;
+        $this->assertEquals($expected, $response);
+
+    }
+    public function test_fixed_and_commission_cant_be_greater_than_500(){
+        //given
+        $donnationFees = new DonationFee(6000, 10);
+        //when
+        $response = $donnationFees->getFixedAndCommissionFeeAmount();
+
+        //then
+        $expected = 500;
+        $this->assertEquals($expected, $response);
+
+    }
+
     public function test_donation_amount_is_not_integer()
     {
         $this->expectException(\Exception::class);
@@ -36,7 +60,7 @@ class DonationFeeTest extends TestCase
         $actual = $donationFees->getCommissionAmount();
 
         // Alors la Valeur de la commission doit être de 250,5
-        $expected = 250 + DonationFee::FIXED_FEES;
+        $expected = 250;
         $this->assertEquals($expected, $actual);
     }
     public function test_percent_amount_is_higher_than_30()
@@ -64,22 +88,22 @@ class DonationFeeTest extends TestCase
         $actual = $donationFees->getCommissionAmount();
 
         // Alors la Valeur de la commission doit être de 20
-        $expected = 20 + DonationFee::FIXED_FEES;
+        $expected = 20;
         $this->assertEquals($expected, $actual);
     }
     // oublie amountCollected
     public function test_get_summary_return_correct_value()
     {
         $donationFees = new \App\Support\DonationFee(200, 10);
-        $actual = $donationFees->getSummary();
+        $response = $donationFees->getSummary();
         $expected = [
             'donation' => 200,
             'fixedFee' => DonationFee::FIXED_FEES,
             'commission' => 20,
             'fixedAndCommission' => 70,
-            'amountCollected' => 130,
+            'amountCollected' => 180,
         ];
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $response);
     }
 }

@@ -41,7 +41,7 @@ class DonationFee
 
     public function getAmountCollected(){
 
-        return intval($this->donation - $this->getCommissionAmount());
+        return intval($this->donation - $this->getFixedAndCommissionFeeAmount());
 
     }
 

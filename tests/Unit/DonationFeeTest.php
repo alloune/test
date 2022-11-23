@@ -101,7 +101,7 @@ class DonationFeeTest extends TestCase
             'fixedFee' => DonationFee::FIXED_FEES,
             'commission' => 20,
             'fixedAndCommission' => 70,
-            'amountCollected' => 180,
+            'amountCollected' => 130,
         ];
 
         $this->assertEquals($expected, $response);

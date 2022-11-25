@@ -18,6 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->string('author_name')->nullable();
+            $table->integer( 'user_id')->nullable();
             $table->timestamps();
         });
     }

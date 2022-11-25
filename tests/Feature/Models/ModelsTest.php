@@ -10,6 +10,7 @@ class ModelsTest extends TestCase
 {
    use RefreshDatabase;
    protected $seed =true;
+
     public function test_relationship_between_project_and_user(){
         //given
         $project = Project::first()->make(['user_id'=> 2]);

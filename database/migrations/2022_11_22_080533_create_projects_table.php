@@ -18,6 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('name')->default('');
             $table->string('description')->default('');
             $table->string('author_name')->default('');
+            $table->integer("user_id")->default('');
             $table->timestamps();
         });
     }

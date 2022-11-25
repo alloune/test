@@ -40,10 +40,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
+        /*$user = Auth::user();
         if(!$user){
             return view('login');
-        }
+        }*/
 
         Project::create([
             'name' => $request->input('name'),

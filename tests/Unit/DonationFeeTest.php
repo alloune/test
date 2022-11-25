@@ -106,4 +106,12 @@ class DonationFeeTest extends TestCase
 
         $this->assertEquals($expected, $response);
     }
+    public function test_amount_collected()
+    {
+        $donationFees = new \App\Support\DonationFee(200, 10);
+        $response = $donationFees->getAmountCollected();
+        $expected = 180 - DonationFee::FIXED_FEES;
+
+        $this->assertEquals($expected, $response);
+    }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class ProjectTest extends TestCase
@@ -70,6 +71,23 @@ class ProjectTest extends TestCase
         $response->assertSee( $project->author_name );
     }
 
+    public function test_store_new_project()
+    {
+        //when
+        $response = $this->from('/project/create')
+        ->post(route('project.store', [
+            'name' => 'Test',
+            'description' => 'trop bien',
+            'author_name' => 'modo',
+            'user_id' => '7',
+        ]))
+        ->assertRedirect();
+    }
+
+    /*public function test_()
+    {
+        $this->withExceptionHandling()->signIn();
 
 
+    }*/
 }

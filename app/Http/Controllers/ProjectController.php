@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -27,7 +29,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -38,7 +40,26 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        if(!$user){
+            return view('login');
+        }
+
+        Project::create([
+            'name' => $request->input('name'),
+            'author_name' =>  'toto',
+            'user_id' =>  7,
+            'description' => $request->input('description'),
+
+        ]);
+       /* $newProject = new Project();
+        $newProject->name = $request->input('name');
+        $newProject->author_name = $user ? $user->name : 'jean' ;
+        $newProject->user_id = $user ? $user->id : '0' ;
+        $newProject->description = $request->input('description');
+        $newProject->save();*/
+        return redirect('/project/' . 2);
+
     }
 
     /**

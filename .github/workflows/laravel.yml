@@ -2,7 +2,7 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "alloune-laravel-test" ]
   pull_request:
     branches: [ "main" ]
 

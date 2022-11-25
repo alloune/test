@@ -18,5 +18,6 @@ Route::get('/', function () {
 });
 
 Route::resource('/project', \App\Http\Controllers\ProjectController::class);
+Route::resource('/donation', \App\Http\Controllers\DonationController::class);
 
 

@@ -75,6 +75,7 @@ class ProjectTest extends TestCase
     {
         //when
         $response = $this->from('/project/create')
+
         ->post(route('project.store', [
             'name' => 'Test',
             'description' => 'trop bien',
@@ -82,6 +83,21 @@ class ProjectTest extends TestCase
             'user_id' => '7',
         ]))
         ->assertRedirect();
+    }
+
+    public function test_store_donation_and_see_correct_amount_in_show_view()
+    {
+        //when
+        $response = $this->from('/project/2')
+
+            ->post(route('donation.store', [
+                'amount' => '20',
+                'user_id' => '7',
+                'project_id' => '2',
+            ]))
+            //10% de 20 -> 2 euros, + les frais fixes 0,5 = 20-2,5 = 17,5
+            ->assertSee('Montant total collecté =17.5 €' );
+
     }
 
     /*public function test_()

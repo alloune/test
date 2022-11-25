@@ -26,15 +26,6 @@
             <h2> {{ $project->name }} </h2>
             <p> {{ $project->description }} </p>
 
-            <form action="{{ route('donation.store') }}" method="post">
-                @csrf
-                @method('post')
-                <label>Montant</label>
-                <input type="number" placeholder="10" name="amount"><small>€</small>
-                <input type="hidden" name="user_id" value="1">
-                <input type="hidden" name="project_id" value="{{ $project->id }}">
-                <input  type="submit" class="btn btn-primary">
-
-            </form>
+            <h1>Montant total collecté ={{ $totalAmount / 100}} € </h1>
         </div>
 @endsection

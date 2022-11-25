@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Donation;
 use App\Models\Project;
+use App\Support\DonationFee;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
-class ProjectController extends Controller
+class DonationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-
-        return view('project', [
-            'projects' => Project::all()
-        ]);
+        //
     }
 
     /**
@@ -29,57 +26,53 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        /*$user = Auth::user();
+        $donation = new Donation();
 
-        if (!$user) {
-            return view('login');
-        }*/
+        $donation->user_id = rand(0, Project::count());
+        $donation->amount = $request->input('amount') * 100;
+        $donation->project_id = $request->input('project_id');
 
-        Project::create([
-            'name' => $request->input('name'),
-            'author_name' =>  'toto',
-            'user_id' =>  7,
-            'description' => $request->input('description'),
+        $donation->save();
+
+        $donationFee = new DonationFee($donation->amount, 10);
+
+        return view('donationShow',
+            [
+                'totalAmount' => $donationFee->getAmountCollected(),
+                'project' => Project::where('id', $request->input('project_id'))->first(),
         ]);
-       /* $newProject = new Project();
-        $newProject->name = $request->input('name');
-        $newProject->author_name = $user ? $user->name : 'jean' ;
-        $newProject->user_id = $user ? $user->id : '0' ;
-        $newProject->description = $request->input('description');
-        $newProject->save();*/
-        $findLast = Project::count();
-        return redirect('/project/'.$findLast);
+
+
+
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
     public function show(Project $project)
     {
-        return view('show',[
-            'project' => $project
-        ]);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
     public function edit(Project $project)
@@ -90,8 +83,8 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Project  $project
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Project $project)
@@ -102,7 +95,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
     public function destroy(Project $project)
